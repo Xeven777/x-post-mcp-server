@@ -8,7 +8,6 @@ dotenv.config();
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function fetchTopStories(num: number = 5): Promise<Article[]> {
-  console.log("Fetching top stories...");
   const url = "https://hn.algolia.com/api/v1/search";
   const yesterdayTimestamp = Math.floor(Date.now() / 1000) - 97000;
   const params = new URLSearchParams({
@@ -23,7 +22,7 @@ async function fetchTopStories(num: number = 5): Promise<Article[]> {
   }
 
   const data = (await response.json()) as HNResponse;
-  console.log("Fetched top stories:", data.hits);
+  console.log("Fetched top stories");
   return data.hits.map((hit) => ({
     title: hit.title,
     url: hit.url,
@@ -36,7 +35,6 @@ async function fetchTopStories(num: number = 5): Promise<Article[]> {
 }
 
 async function generateRecap(stories: Article[]): Promise<string> {
-  console.log("Generating recap...");
   const storiesInfo = stories
     .map(
       (story, i) =>
