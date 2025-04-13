@@ -30,6 +30,7 @@ const twitterClient = new TwitterApi({
 
 export async function createPost(status: string): Promise<CreatePostResponse> {
   try {
+    console.log("Tweeting status:", status);
     const newPost = await twitterClient.v2.tweet({
       text: status,
     });

@@ -27,7 +27,7 @@ server.tool(
       content: [
         {
           type: "text",
-          text: post.content[0]?.text || "Post created",
+          text: post.content?.[0]?.text || "Post created",
         },
       ],
     };
