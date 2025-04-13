@@ -1,5 +1,6 @@
 import { TwitterApi } from "twitter-api-v2";
 import dotenv from "dotenv";
+import type { CreatePostResponse } from "./types";
 
 dotenv.config();
 
@@ -27,7 +28,7 @@ const twitterClient = new TwitterApi({
   accessSecret: process.env.TWITTER_ACCESS_SECRET!,
 }).readWrite;
 
-export async function createPost(status: string) {
+export async function createPost(status: string): Promise<CreatePostResponse> {
   try {
     const newPost = await twitterClient.v2.tweet({
       text: status,

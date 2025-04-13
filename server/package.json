@@ -9,6 +9,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@google/genai": "^0.8.0",
     "@modelcontextprotocol/sdk": "^1.9.0",
     "@types/express": "^5.0.1",
     "dotenv": "^16.3.1",
