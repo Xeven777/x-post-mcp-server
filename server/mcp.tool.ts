@@ -31,9 +31,15 @@ const twitterClient = new TwitterApi({
 export async function createPost(status: string): Promise<CreatePostResponse> {
   try {
     console.log("Tweeting status:", status);
+
     const newPost = await twitterClient.v2.tweet({
-      text: status,
+      text: status.length > 280 ? status.slice(0, 273) + "..." : status,
     });
+
+    if (!newPost?.data?.text) {
+      throw new Error("Failed to create tweet: No response data");
+    }
+
     console.log("Tweeted: ", newPost.data.text);
     return {
       content: [
@@ -43,8 +49,31 @@ export async function createPost(status: string): Promise<CreatePostResponse> {
         },
       ],
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.data?.detail) {
+      console.error("Twitter API error:", {
+        detail: error.data.detail,
+        status: error.data.status,
+        title: error.data.title,
+      });
+
+      switch (error.data.status) {
+        case 403:
+          throw new Error(
+            "Twitter API: Authentication failed. Please check your API keys and tokens."
+          );
+        case 429:
+          throw new Error(
+            "Twitter API: Rate limit exceeded. Please try again later."
+          );
+        default:
+          throw new Error(`Twitter API: ${error.data.detail}`);
+      }
+    }
+
     console.error("Twitter API error:", error);
-    throw new Error("Failed to create tweet: " + (error as Error).message);
+    throw new Error(
+      "Failed to create tweet: " + (error.message || "Unknown error")
+    );
   }
 }

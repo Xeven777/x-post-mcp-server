@@ -48,7 +48,7 @@ async function generateRecap(stories: Article[]): Promise<string> {
 
 ${storiesInfo}
 
-Please create a concise and engaging recap of these stories in under 100 words. Format it as a tweet, including relevant emojis. Make it informative, sarcastic yet casual.`;
+Please create a concise and engaging recap of these stories in under 200 characters. Format it as a tweet, including relevant emojis. Make it informative, sarcastic yet casual.`;
   const result = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: [
