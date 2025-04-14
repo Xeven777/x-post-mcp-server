@@ -9,7 +9,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function fetchTopStories(num: number = 5): Promise<Article[]> {
   const url = "https://hn.algolia.com/api/v1/search";
-  const yesterdayTimestamp = Math.floor(Date.now() / 1000) - 97000;
+  const yesterdayTimestamp = Math.floor(Date.now() / 1000) - 99000;
   const params = new URLSearchParams({
     tags: "story",
     hitsPerPage: num.toString(),
@@ -48,7 +48,7 @@ async function generateRecap(stories: Article[]): Promise<string> {
 
 ${storiesInfo}
 
-Please create a concise and engaging recap of these stories in under 200 characters. Format it as a tweet, including relevant emojis. Make it informative, sarcastic yet casual.`;
+Please create a concise and engaging recap of these stories in under 270 characters. Format it as a tweet, including relevant emojis. Make it informative, sarcastic yet casual.`;
   const result = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: [
