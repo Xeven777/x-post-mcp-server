@@ -43,7 +43,7 @@ The server exposes the MCP endpoint and the `createPost` tool.
     ```bash
     bun install
     ```
-3.  **Run the server (development mode with hot-reloading):**
+3.  **Run the server:**
     ```bash
     bun run dev
     ```

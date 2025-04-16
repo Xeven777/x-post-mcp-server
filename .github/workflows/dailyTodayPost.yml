@@ -1,8 +1,8 @@
-name: Daily X Post
+name: Daily Today's Events Post
 
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 12 * * *"
   workflow_dispatch:
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Create Post
         working-directory: ./server
-        run: bun autopost.ts
+        run: bun autopost_today.ts
         env:
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
