@@ -1,13 +1,18 @@
 # 🤖 MCP X/Twitter Post Server & Client
 
-This project demonstrates a Model Context Protocol (MCP) server that allows interaction with the X (formerly Twitter) API, along with a client to interact with the server using Google's Gemini AI, and an automated daily posting script.
+This project demonstrates a Model Context Protocol (MCP) server that allows interaction with the X (formerly Twitter) API, along with a client to interact with the server using Google's Gemini AI, and automated daily posting scripts.
 
 ## ✨ Features
 
 - **MCP Server (`/server`)**: Exposes a `createPost` tool via MCP to post tweets.
 - **MCP Client (`/client`)**: Connects to the MCP server and uses Google Gemini AI to interact with the `createPost` tool through natural language.
-- **Auto Poster (`/server/autopost.ts`)**: Fetches top Hacker News stories daily, generates a recap using Gemini AI, and posts it to X using the `createPost` tool.
-- **GitHub Action (`/.github/workflows/daily-post.yml`)**: Runs the auto-poster script daily at 12:00 UTC. 🕛
+- **Auto Poster (`/server/autopost.ts`)**: 🚀 Fetches top Hacker News stories daily, generates a recap using Gemini AI, and posts it to X using the `createPost` tool.
+- **Quote Poster (`/server/autopost_quotes.ts`)**: 💬 Fetches a random ZenQuotes quote and posts it to X.
+- **On This Day Poster (`/server/autopost_today.ts`)**: 📅 Fetches a historical event for today from ZenQuotes and posts it to X.
+- **GitHub Actions**: 🤖 Automates posting with workflows:
+  - `/.github/workflows/daily-post.yml`: 📰 Posts Hacker News recap daily at 12:00 UTC.
+  - `/.github/workflows/autopost_quotes.yml`: 💡 Posts a quote daily at 4:00 UTC.
+  - `/.github/workflows/autopost_today.yml`: 🏛️ Posts a historical event daily at 18:00 UTC.
 
 ## 🚀 Getting Started
 
@@ -74,28 +79,43 @@ The client connects to the server and allows you to interact with the [`createPo
     ```
     You can now chat with the AI. Try asking it to "post 'Hello World!' to X".
 
-### 📰 Auto Poster (`/server/autopost.ts`)
+### 📰 Auto Posters (`/server/autopost.ts`, `/server/autopost_quotes.ts`, `/server/autopost_today.ts`)
 
-This script fetches the top 5 Hacker News stories from the last ~24 hours, uses Gemini to generate a witty recap, and posts it to X.
+- **Hacker News Recap**: 🚀 Fetches the top 5 Hacker News stories from the last ~24 hours, uses Gemini to generate a witty recap, and posts it to X.
+- **Quote Poster**: 💬 Fetches a random quote from ZenQuotes and posts it to X.
+- **On This Day Poster**: 📅 Fetches a historical event for today from ZenQuotes and posts it to X.
 
-1.  **Navigate to the server directory:**
+**How to use:**
+
+1.  📂 **Navigate to the server directory:**
     ```bash
     cd server
     ```
-2.  **Ensure dependencies are installed (`bun install`).**
-3.  **Ensure your [`server/.env`](server/.env) file has both Twitter and Gemini keys.**
-4.  **Run the script directly:**
+2.  📦 **Install dependencies:**
     ```bash
-    bun run autopost.ts
+    bun install
+    ```
+3.  🔑 **Set up your `.env` file** with Twitter and Gemini keys.
+4.  ▶️ **Run the scripts directly:**
+    ```bash
+    bun run autopost.ts           # 🚀 Hacker News Recap
+    bun run autopost_quotes.ts    # 💬 ZenQuotes Quote
+    bun run autopost_today.ts     # 📅 On This Day Event
     ```
 
-### 🔁 Daily GitHub Action
+### 🔁 Automated GitHub Actions
 
-The workflow defined in [`.github/workflows/daily-post.yml`](.github/workflows/daily-post.yml) automates the execution of the [`server/autopost.ts`](server/autopost.ts) script every day at 12:00 UTC.
+The following workflows keep your X account fresh and fun, automatically:
 
-- It checks out the code.
-- Sets up Bun.
-- Installs server dependencies.
-- Runs `bun run autopost.ts` using secrets configured in the GitHub repository settings ([`TWITTER_API_KEY`](server/mcp.tool.ts), [`TWITTER_API_SECRET`](server/mcp.tool.ts), etc.).
+- [`daily-post.yml`](.github/workflows/daily-post.yml): 📰 Runs [`server/autopost.ts`](server/autopost.ts) every day at 12:00 UTC.
+- [`autopost_quotes.yml`](.github/workflows/autopost_quotes.yml): 💡 Runs [`server/autopost_quotes.ts`](server/autopost_quotes.ts) every day at 4:00 UTC.
+- [`autopost_today.yml`](.github/workflows/autopost_today.yml): 🏛️ Runs [`server/autopost_today.ts`](server/autopost_today.ts) every day at 18:00 UTC.
+
+Each workflow:
+
+- ✅ Checks out the code
+- 🛠️ Sets up Node.js
+- 📦 Installs dependencies
+- 🚦 Runs the respective script using secrets configured in the GitHub repository settings
 
 Enjoy using the MCP X Poster! 🎉
